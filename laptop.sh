@@ -7,13 +7,9 @@
 # check to see if there is a lid, if there is it's a laptop, if not it's a desktop.
 if [ -d "/proc/acpi/button/lid" ]; then
 	# install necessary extra software
-	sudo apt -y install texlive-latex-base # to make pdfs
-
-	upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep model >> /home/$USER/Desktop/laptop.tex
-	upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep 'energy-full-design' >> /home/$USER/Desktop/laptop.tex
-	upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep 'energy-full:' >> /home/$USER/Desktop/laptop.tex
-	upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep capacity >> /home/$USER/Desktop/laptop.tex
-
+	echo "\section{Laptop Specific}" >> /home/$USER/Desktop/specs.tex
+	acpi -V | grep "design capacity" >> /home/$USER/Desktop/specs.tex
+	echo "\newline" >> /home/$USER/Desktop/specs.tex
 	# display the resolution
-	xrandr | grep -m1 connected >> /home/$USER/Desktop/laptop.tex
+	xrandr | grep -m1 connected >> /home/$USER/Desktop/specs.tex
 fi
